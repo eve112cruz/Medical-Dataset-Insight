@@ -1,5 +1,5 @@
 # Medical-Dataset-Insight
-Data cleaning/insight done in MySql
+
   OBJECTIVE-
 This project focuses on cleaning, transforming, and analyzing a synthetic medical appointments dataset using SQL.
 My goal was to demonsatrare data cleaning, data standardization, analytical thinking, and SQL query skills.
