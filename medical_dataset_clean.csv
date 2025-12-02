@@ -369,8 +369,39 @@ CHANGE appointment_status_clean appointment_status VARCHAR(50),
 CHANGE appointment_date_clean appointment_date DATE,
 CHANGE department_clean department VARCHAR(50);
 
+-- Created new calculated field columns for data manipulation
 
+ALTER TABLE medical_dataset_clean
+ADD COLUMN amount_pending DECIMAL(10,2);
 
+UPDATE medical_dataset_clean
+SET amount_pending = amount_billed - amount_paid;
+
+ALTER TABLE medical_dataset_clean
+ADD COLUMN payment_status VARCHAR(20);
+
+UPDATE medical_dataset_clean
+SET payment_status =
+	CASE
+		WHEN amount_pending = 0 THEN 'PAID'
+        WHEN amount_pending > 0 THEN 'UNPAID'
+        ELSE 'CHECK'
+	END;
+    
+SELECT amount_billed, amount_paid, amount_pending, payment_status
+FROM medical_dataset_clean;
+    
+ALTER TABLE medical_dataset_clean
+ADD COLUMN appointment_year INT;    
+    
+UPDATE medical_dataset_clean
+SET appointment_year = YEAR(appointment_date);
+
+ALTER TABLE medical_dataset_clean
+ADD COLUMN appointment_month INT;
+
+UPDATE medical_dataset_clean
+SET appointment_month = MONTH(appointment_date);  
 
 
 
