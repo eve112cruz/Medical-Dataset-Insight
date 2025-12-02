@@ -1,4 +1,4 @@
--- These are the SQL queries i ran to understand and gain insight from my data.
+-- These are the SQL queries I ran to understand and gain insight from my data.
 
 -- total number of patients
 
