@@ -1,3 +1,5 @@
+-- Created a new table
+
 SELECT *
 FROM medical_dataset_dirty;
 
@@ -8,6 +10,8 @@ FROM medical_dataset_dirty;
 SELECT *
 FROM medical_dataset_clean
 LIMIT 10;
+
+-- Cleanded and standardized Patient name column
 
 ALTER TABLE medical_dataset_clean
 ADD COLUMN patient_name_clean VARCHAR(200);
@@ -109,6 +113,8 @@ SET patient_name_clean = REPLACE(patient_name_clean, 'mr michael sutton', 'micha
 UPDATE medical_dataset_clean
 SET patient_name_clean = REPLACE(patient_name_clean, 'mrs. claire huffman', 'claire huffman');
 
+-- Cleaned and standardized Phone column
+
 ALTER TABLE medical_dataset_clean
 ADD COLUMN patient_phone_clean VARCHAR(50);
 
@@ -155,6 +161,8 @@ SET patient_phone_clean =
     )
 WHERE LENGTH(patient_phone_clean) = 10;
 
+-- Cleaned and standardized Patient address column
+
 ALTER TABLE medical_dataset_clean
 ADD COLUMN patient_address_clean VARCHAR(300);
 
@@ -179,6 +187,8 @@ SET patient_address_clean = TRIM(REPLACE(patient_address_clean, '  ', ' '));
 SELECT patient_address_clean, patient_address
 FROM medical_dataset_clean;
 
+-- CLeaned and standerdized Appointment status column
+
 ALTER TABLE medical_dataset_clean
 ADD COLUMN appointment_status_clean VARCHAR(50);
 
@@ -197,6 +207,7 @@ SET appointment_status_clean = REPLACE(appointment_status_clean, '  ', ' ');
 UPDATE medical_dataset_clean
 SET appointment_status_clean = REPLACE(appointment_status_clean, 'canceled', 'cancelled');
 
+-- Cleaned and standerdized Insurance provider column
 
 ALTER TABLE medical_dataset_clean
 ADD COLUMN insurance_provider_clean VARCHAR(100);
@@ -234,6 +245,8 @@ WHERE insurance_provider_clean LIKE '%aetna%';
 UPDATE medical_dataset_clean
 SET insurance_provider_clean = 'none'
 WHERE insurance_provider_clean IN ('none', 'n/a', 'null', '');
+
+-- Cleaned and standerdized  Doctor name column
 
 ALTER TABLE medical_dataset_clean
 ADD COLUMN doctor_name_clean VARCHAR(100);
@@ -295,6 +308,8 @@ FROM medical_dataset_clean
 WHERE appointment_date IS NULL
    OR appointment_date = '';
 
+-- Cleaned and standerdized Appointment column
+
 ALTER TABLE medical_dataset_clean
 ADD COLUMN appointment_date_clean DATE;
 
@@ -304,6 +319,8 @@ SET appointment_date_clean = STR_TO_DATE(appointment_date, '%Y-%m-%d');
 SELECT appointment_date, appointment_date_clean
 FROM medical_dataset_clean
 LIMIT 20;
+
+-- Cleaned and standerdized Department column
 
 ALTER TABLE medical_dataset_clean
 ADD COLUMN department_clean VARCHAR(50);
@@ -326,8 +343,9 @@ UPDATE medical_dataset_clean
 SET department_clean = 'ent'
 WHERE department_clean IN ('ent', 'e.n.t');
 
-DESCRIBE medical_dataset_clean;
+-- Dropped old messy columns
 
+DESCRIBE medical_dataset_clean;
 
 ALTER TABLE medical_dataset_clean
 DROP patient_name,
@@ -338,6 +356,8 @@ DROP doctor_name,
 DROP appointment_status,
 DROP appointment_date,
 DROP department;
+
+-- Renamed new columns
 
 ALTER TABLE medical_dataset_clean
 CHANGE patient_name_clean patient_name VARCHAR(100),
