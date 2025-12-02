@@ -1,3 +1,5 @@
+-- These are the SQL queries i ran to understand and gain insight from my data.
+
 -- total number of patients
 
 SELECT COUNT(DISTINCT patient_id) AS total_patients
